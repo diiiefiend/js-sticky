@@ -82,7 +82,9 @@ function moveScroller(trigger) {
         stickied = true;
         scrollEl.css({
             position: "absolute",
-            top: anchorPos - elHeight - 250,
+            // may have to subtract an additional constant if your element is in a position: relative container
+            // (since anchorPos is off of absolute coords)
+            top: anchorPos - elHeight - 0,
             width: elInnerWidth
         });
       }
