@@ -93,8 +93,11 @@ function moveScroller(trigger) {
   move();
 }
 
-// on page load, look for scroller elements
-$(document).on("pageLoaded", function() {
+// define the event on which to look for sticky elements. default is document ready
+var stickyEventTrigger = "ready";
+
+// on event trigger, look for scroller elements
+$(document).on(stickyEventTrigger, function() {
   if(document.getElementById("scroller") !== null){
     moveScroller("top");
   }
@@ -103,10 +106,3 @@ $(document).on("pageLoaded", function() {
     moveScroller("bottom");
   }
 });
-
-// keeping this for posterity even though i didn't end up using it bc of too much flickering
-// took FOREVER to figure out
-// negative margin = (overlap between anchorPos and trigger Pos) - (delta scrolling)
-//
-// marginTop: Math.round((anchorPos - triggerPos) - (scrollPos - initialScrollPos))
-// console.log("ap: " + anchorPos + " tp: " + triggerPos + " sp: " + scrollPos + " isp: " + initialScrollPos);
