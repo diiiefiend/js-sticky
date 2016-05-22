@@ -1,52 +1,55 @@
 // TO USE:
-// in your document, define #scroller and #scroller-anchor (and possibly #scroller-cont)
-// to change trigger from top of #scroller to bottom of #scroller, use #scroller-bottom instead of #scroller
-// define a container div #scroller-cont if #scroller isn't a position: fixed or position: absolute element
+// in your document, define #sticky and #sticky-trigger (and possibly #sticky-cont)
+// to change trigger from top of #sticky to bottom of #sticky, use #sticky-bottom instead of #sticky
+// define a container div #sticky-cont if #sticky isn't a position: fixed or position: absolute element
+
+// define the event on which to look for sticky elements. default is document ready
+var jsStickyEventTrigger = "ready";
 
 function moveScroller(trigger) {
-  var move, scrollEl, scrollPos;
+  var move, scrollPos;
 
-  var anchorPos = $("#scroller-anchor").offset().top; // always static
+  var triggerPos = $("#sticky-trigger").offset().top;
 
-  var scrollEl = (trigger === "top") ? $("#scroller") : $("#scroller-bottom");
+  var stickyEl = (trigger === "top") ? $("#sticky") : $("#sticky-bottom");
 
   // total = with margins
-  var elTotalWidth = scrollEl.outerWidth(true);
-  var elTotalHeight = scrollEl.outerHeight(true);
-  // doesn't include margins
-  var elHeight = scrollEl.outerHeight();
+  var elTotalWidth = stickyEl.outerWidth(true);
+  var elTotalHeight = stickyEl.outerHeight(true);
   // just the width of the inner content (no padding/border/margins)
-  var elInnerWidth = scrollEl.css("width");
+  var elInnerWidth = stickyEl.css("width");
 
   if (trigger === "top"){
 
     move = function() {
       scrollPos = $(window).scrollTop();
-      if (scrollPos > anchorPos) {
-        scrollEl.css({
+      if (scrollPos > triggerPos) {
+        // sticky it
+        stickyEl.css({
             position: "fixed",
             top: "0",             // change as needed
             width: elInnerWidth,
             zIndex: 100,
-            opacity: 0.9
+            // add any additional properties as needed
         });
 
         // need to create a "placeholder" for the element in the DOM if it
         // used to be position: static or position: relative
-        if(document.getElementById("scroller-cont") !== null){
-          $("#scroller-cont").css({
+        if(document.getElementById("sticky-cont") !== null){
+          $("#sticky-cont").css({
             width: elTotalWidth,
             height: elTotalHeight
           });
         }
 
       } else {
-        scrollEl.css({
+        // unsticky it
+        stickyEl.css({
             position: "",
             top: "",
             width: "",
             zIndex: "",
-            opacity: ""
+            // add any additional properties as needed
         });
       }
     };
@@ -57,11 +60,12 @@ function moveScroller(trigger) {
     move = function() {
       scrollPos = $(window).scrollTop();
       // pt of interest is the bottom of the element
-      var triggerPos = scrollEl.offset().top + elHeight;
+      var benchmarkPos = stickyEl.offset().top + elTotalHeight;
 
       // if scrolling up, check to see if unstuck
       if ( initialScrollPos && (scrollPos < initialScrollPos)){
-        scrollEl.css({
+        // unsticky it
+        stickyEl.css({
             position: "",
             top: "",
             width: ""
@@ -75,16 +79,16 @@ function moveScroller(trigger) {
         return;
       }
 
-      if (triggerPos > anchorPos) {
+      if (benchmarkPos > triggerPos) {
         // sticky it!
         // keep track of initial scroll place so can get scroll difference
         initialScrollPos = (initialScrollPos) ? initialScrollPos : scrollPos;
         stickied = true;
-        scrollEl.css({
+        stickyEl.css({
             position: "absolute",
             // may have to subtract an additional constant if your element is in a position: relative container
-            // (since anchorPos is off of absolute coords)
-            top: anchorPos - elHeight - 0,
+            // (since triggerPos is off of absolute coords)
+            top: triggerPos - elTotalHeight - 0,
             width: elInnerWidth
         });
       }
@@ -95,16 +99,13 @@ function moveScroller(trigger) {
   move();
 }
 
-// define the event on which to look for sticky elements. default is document ready
-var stickyEventTrigger = "ready";
-
-// on event trigger, look for scroller elements
-$(document).on(stickyEventTrigger, function() {
-  if(document.getElementById("scroller") !== null){
+// on event trigger, look for sticky elements
+$(document).on(jsStickyEventTrigger, function() {
+  if(document.getElementById("sticky") !== null){
     moveScroller("top");
   }
 
-  if(document.getElementById("scroller-bottom") !== null){
+  if(document.getElementById("sticky-bottom") !== null){
     moveScroller("bottom");
   }
 });
