@@ -68,7 +68,8 @@ function moveScroller(trigger) {
         stickyEl.css({
             position: "",
             top: "",
-            width: ""
+            width: "",
+            // add any additional properties as needed
         });
         stickied = false;
         initialScrollPos = undefined;
@@ -89,7 +90,8 @@ function moveScroller(trigger) {
             // may have to subtract an additional constant if your element is in a position: relative container
             // (since triggerPos is off of absolute coords)
             top: triggerPos - elTotalHeight - 0,
-            width: elInnerWidth
+            width: elInnerWidth,
+            // add any additional properties as needed
         });
       }
     };
