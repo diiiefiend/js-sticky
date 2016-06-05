@@ -4,7 +4,7 @@
 Only jQuery, post version 1.7
 
 ### Usage
-Define a `#sticky` element (or `#sticky-bottom` if you want it benchmarked by the bottom of the element instead of the top), a `#sticky-trigger` element (if it's just a position in the page, can just make an empty div like `<div id="sticky-trigger"></div>`), and, if your `#sticky` element is `position: relative` or `static`, wrap `#sticky` in a a `#sticky-cont` div.
+Define a `#sticky` element (or `#sticky-bottom` if you want it benchmarked by the bottom of the element instead of the top), a `#sticky-trigger` element (if it's just a position in the page, can just make an empty div like `<div id="sticky-trigger"></div>`), and, if your `#sticky` element takes up space in the DOM (i.e. is `position: relative` or `static` and NOT floating), wrap `#sticky` in a `#sticky-cont` div.
 
 For example:
 ```html

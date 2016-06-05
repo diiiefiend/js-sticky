@@ -1,7 +1,8 @@
 // TO USE:
 // in your document, define #sticky and #sticky-trigger (and possibly #sticky-cont)
 // to change trigger from top of #sticky to bottom of #sticky, use #sticky-bottom instead of #sticky
-// define a container div #sticky-cont if #sticky isn't a position: fixed or position: absolute element
+// define a container div #sticky-cont if #sticky isn't a position: fixed, position: absolute,
+//  or floating element
 
 // define the event on which to look for sticky elements. default is document ready
 var jsStickyEventTrigger = "ready";
@@ -10,6 +11,9 @@ function moveScroller(trigger) {
   var move, scrollPos;
 
   var triggerPos = $("#sticky-trigger").offset().top;
+  // may need these if your element is in a position: relative container
+  var relTriggerPos = $("#sticky-trigger").position().top;
+  var triggerPosDiff = triggerPos - relTriggerPos;
 
   var stickyEl = (trigger === "top") ? $("#sticky") : $("#sticky-bottom");
 
@@ -18,6 +22,8 @@ function moveScroller(trigger) {
   var elTotalHeight = stickyEl.outerHeight(true);
   // just the width of the inner content (no padding/border/margins)
   var elInnerWidth = stickyEl.css("width");
+  
+  var elLeftPos = scrollEl.offset().left;
 
   if (trigger === "top"){
 
@@ -28,6 +34,7 @@ function moveScroller(trigger) {
         stickyEl.css({
             position: "fixed",
             top: "0",             // change as needed
+            left: elLeftPos,
             width: elInnerWidth,
             zIndex: 100,
             // add any additional properties as needed
@@ -47,6 +54,7 @@ function moveScroller(trigger) {
         stickyEl.css({
             position: "",
             top: "",
+            left: "",
             width: "",
             zIndex: "",
             // add any additional properties as needed
@@ -68,6 +76,7 @@ function moveScroller(trigger) {
         stickyEl.css({
             position: "",
             top: "",
+            left: "",
             width: "",
             // add any additional properties as needed
         });
@@ -87,9 +96,8 @@ function moveScroller(trigger) {
         stickied = true;
         stickyEl.css({
             position: "absolute",
-            // may have to subtract an additional constant if your element is in a position: relative container
-            // (since triggerPos is off of absolute coords)
-            top: triggerPos - elTotalHeight - 0,
+            top: triggerPos - elTotalHeight - triggerPosDiff,
+            left: elLeftPos,
             width: elInnerWidth,
             // add any additional properties as needed
         });
