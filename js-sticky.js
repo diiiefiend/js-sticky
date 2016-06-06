@@ -22,8 +22,8 @@ function moveScroller(trigger) {
   var elTotalHeight = stickyEl.outerHeight(true);
   // just the width of the inner content (no padding/border/margins)
   var elInnerWidth = stickyEl.css("width");
-  
-  var elLeftPos = scrollEl.offset().left;
+
+  var elLeftPos = stickyEl.offset().left - parseInt(stickyEl.css("margin-left"));
 
   if (trigger === "top"){
 
