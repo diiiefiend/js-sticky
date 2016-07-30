@@ -23,7 +23,10 @@ function moveScroller(trigger) {
   // just the width of the inner content (no padding/border/margins)
   var elInnerWidth = stickyEl.css("width");
 
+  // used for position: fixed
   var elLeftPos = stickyEl.offset().left - parseInt(stickyEl.css("margin-left"));
+  // used for position: absolute
+  var relLeftPos = stickyEl.position().left;
 
   if (trigger === "top"){
 
@@ -97,7 +100,7 @@ function moveScroller(trigger) {
         stickyEl.css({
             position: "absolute",
             top: triggerPos - elTotalHeight - triggerPosDiff,
-            left: elLeftPos,
+            left: relLeftPos,
             width: elInnerWidth,
             // add any additional properties as needed
         });
@@ -107,6 +110,11 @@ function moveScroller(trigger) {
 
   $(window).scroll(move);
   move();
+
+  // reset elLeftPos in case of window resize
+  $(window).resize(function (){
+    elLeftPos = stickyEl.offset().left - parseInt(stickyEl.css("margin-left"));
+  });
 }
 
 // on event trigger, look for sticky elements
