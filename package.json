@@ -1,0 +1,24 @@
+{
+  "name": "js-sticky",
+  "version": "1.0.0",
+  "description": "utility to allow elements to 'stick' to the top or bottom of a window.",
+  "main": "js-sticky.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diiiefiend/js-sticky.git"
+  },
+  "keywords": [
+    "sticky",
+    "fixed",
+    "scroll"
+  ],
+  "author": "Ariel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/diiiefiend/js-sticky/issues"
+  },
+  "homepage": "https://github.com/diiiefiend/js-sticky#readme"
+}

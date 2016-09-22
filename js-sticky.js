@@ -1,8 +1,10 @@
-// TO USE:
-// in your document, define #sticky and #sticky-trigger (and possibly #sticky-cont)
-// to change trigger from top of #sticky to bottom of #sticky, use #sticky-bottom instead of #sticky
-// define a container div #sticky-cont if #sticky isn't a position: fixed, position: absolute,
-//  or floating element
+/**
+ * TO USE:
+ * in your document, define #sticky and #sticky-trigger (and possibly #sticky-cont)
+ * to change trigger from top of #sticky to bottom of #sticky, use #sticky-bottom instead of #sticky
+ * define a container div #sticky-cont if #sticky isn't a position: fixed, position: absolute,
+ * or floating element
+ */
 
 // define the event on which to look for sticky elements. default is document ready
 var jsStickyEventTrigger = "ready";
